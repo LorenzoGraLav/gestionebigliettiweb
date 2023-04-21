@@ -20,4 +20,7 @@ public interface BigliettoService {
 		public void inserisciNuovo(Biglietto input) throws Exception;
 
 		public void rimuovi(Long idArticoloToRemove) throws Exception;
+		
+		public List<Biglietto> findByExample(Biglietto input) throws Exception;
+
 }
