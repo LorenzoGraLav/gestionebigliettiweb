@@ -1,7 +1,6 @@
 package it.prova.gestionebigliettiweb.web.servlet;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,55 +19,48 @@ import it.prova.gestionebigliettiweb.utility.UtilityBigliettoForm;
 @WebServlet("/ExecuteUpdateBigliettoServlet")
 public class ExecuteUpdateBigliettoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-   
 
-	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		// BINDING
 		String idDaPagina = request.getParameter("id");
-		
-		if(!NumberUtils.isCreatable(idDaPagina)) {
-			request.setAttribute("errorMessage", "Attenzione si è verificato un errore");
+		if (!NumberUtils.isCreatable(idDaPagina)) {
+			request.setAttribute("errorMessage", "Attenzione si è verificato un errore.");
 			request.getRequestDispatcher("/index.jsp").forward(request, response);
 			return;
 		}
-		
-		// ------------------BINDING
-		
 		String provenienzaDaPagina = request.getParameter("provenienza");
 		String destinazioneDaPagina = request.getParameter("destinazione");
-		String dataDaPagina = request.getParameter("data");
 		String prezzoDaPaginaString = request.getParameter("prezzo");
+		String dataDaPagina = request.getParameter("data");
 
-		Biglietto bigliettoInstance = UtilityBigliettoForm.createBigliettoFromParams( provenienzaDaPagina,
-		destinazioneDaPagina, dataDaPagina, prezzoDaPaginaString );
+		Biglietto bigliettoInstance = UtilityBigliettoForm.createBigliettoFromParams(provenienzaDaPagina,
+				destinazioneDaPagina,  dataDaPagina , prezzoDaPaginaString   );
+
 		bigliettoInstance.setId(Long.parseLong(idDaPagina));
-		
-		// ------------------VALIDAZIONE
+		// VALIDAZIONE
 		if (!UtilityBigliettoForm.validateBigliettoBean(bigliettoInstance) || !NumberUtils.isCreatable(idDaPagina)) {
-		request.setAttribute("bigliettoDaAggiungere", bigliettoInstance);
-		request.setAttribute("errorMessage", "Attenzione sono presenti errori di validazione");
-		request.getRequestDispatcher("/biglietto/update.jsp").forward(request, response);
-		return;
+			request.setAttribute("bigliettoDaAggiornare", bigliettoInstance);
+			request.setAttribute("errorMessage", "Attenzione sono presenti errori di validazione");
+			request.getRequestDispatcher("/biglietto/provaupdate.jsp").forward(request, response);
+			return;
 		}
 
-		// ------------------BUSINESS
+		// BUSINESS
 		try {
-		
-		MyServiceFactory.getBigliettoServiceInstance().aggiorna(bigliettoInstance);
-		request.setAttribute("listaBigliettiAttribute", MyServiceFactory.getBigliettoServiceInstance().listAll());
+
+			MyServiceFactory.getBigliettoServiceInstance().aggiorna(bigliettoInstance);
+			request.setAttribute("listaBigliettiAttribute", MyServiceFactory.getBigliettoServiceInstance().listAll());
 		} catch (Exception e) {
-		request.setAttribute("bigliettoDaAggiornare", bigliettoInstance);
-		request.setAttribute("errorMessage", "Attenzione sono presenti errori di validazione");
-		request.getRequestDispatcher("/biglietto/update.jsp").forward(request, response);
-		return;
+			request.setAttribute("bigliettoDaAggiornare", bigliettoInstance);
+			request.setAttribute("errorMessage", "Attenzione sono presenti errori di validazione");
+			request.getRequestDispatcher("index.jsp").forward(request, response);
+			return;
 		}
 
-		// ------------------FORWARD
+		// FORWARD
 		request.getRequestDispatcher("/biglietto/results.jsp").forward(request, response);
-
 	}
 
 }

@@ -38,7 +38,7 @@ public class PrepareUpdateBigliettoServlet extends HttpServlet {
 				//iniziamo il business!
 				
 				try {
-					request.setAttribute("bigliettoDaAggiungere", MyServiceFactory.getBigliettoServiceInstance().caricaSingoloElemento(idDaAggiornare));
+					request.setAttribute("bigliettoDaAggiornare", MyServiceFactory.getBigliettoServiceInstance().caricaSingoloElemento(idDaAggiornare));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -49,7 +49,7 @@ public class PrepareUpdateBigliettoServlet extends HttpServlet {
 				
 				
 				//forward
-				request.getRequestDispatcher("/biglietto/update.jsp").forward(request, response);
+				request.getRequestDispatcher("/biglietto/provaupdate.jsp").forward(request, response);
 	}
 
 	

@@ -19,7 +19,7 @@ public class PrepareInsertBigliettoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//metto un bean 'vuoto' in request perché per la pagina risulta necessario
 				request.setAttribute("insert_biglietto_attr", new Biglietto());
-				request.getRequestDispatcher("/biglietto/insert.jsp").forward(request, response);
+				request.getRequestDispatcher("/biglietto/provainsert.jsp").forward(request, response);
 
 	}
 
