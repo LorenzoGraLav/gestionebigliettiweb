@@ -43,7 +43,7 @@ public class ExecuteUpdateBigliettoServlet extends HttpServlet {
 		if (!UtilityBigliettoForm.validateBigliettoBean(bigliettoInstance) || !NumberUtils.isCreatable(idDaPagina)) {
 			request.setAttribute("bigliettoDaAggiornare", bigliettoInstance);
 			request.setAttribute("errorMessage", "Attenzione sono presenti errori di validazione");
-			request.getRequestDispatcher("/biglietto/provaupdate.jsp").forward(request, response);
+			request.getRequestDispatcher("/biglietto/provaupdate2.jsp").forward(request, response);
 			return;
 		}
 

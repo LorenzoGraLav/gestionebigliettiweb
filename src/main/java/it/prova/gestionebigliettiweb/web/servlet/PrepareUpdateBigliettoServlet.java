@@ -49,7 +49,7 @@ public class PrepareUpdateBigliettoServlet extends HttpServlet {
 				
 				
 				//forward
-				request.getRequestDispatcher("/biglietto/provaupdate.jsp").forward(request, response);
+				request.getRequestDispatcher("/biglietto/provaupdate2.jsp").forward(request, response);
 	}
 
 	
